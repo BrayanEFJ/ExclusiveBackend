@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function getAllCategories()
     {
-        return response()->json(CategoryResource::collection(Category::all()));
+        $response = Category::select(['id', 'name'])->orderBy('id', 'asc')->get();
+        return response()->json(CategoryResource::collection($response));
     }
 
     /**
