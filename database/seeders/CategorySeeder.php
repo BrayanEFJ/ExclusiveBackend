@@ -12,29 +12,29 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            'Electrónica',
-            'Moda y Vestimenta',
-            'Hogar y Cocina',
-            'Salud y Belleza',
-            'Deportes y Aire Libre',
-            'Juguetes y Juegos',
-            'Automotriz',
-            'Libros',
-            'Música',
-            'Herramientas y Mejoras del Hogar',
-            'Jardín y Exteriores',
-            'Mascotas',
-            'Alimentos y Bebidas',
-            'Oficina y Papelería',
-            'Arte y Manualidades',
-            'Instrumentos Musicales',
-            'Tecnologia',
-            'Relojes y Joyería',
-            'Calzado',
-            'Accesorios',
-            'Fotografía y Video',
-            'Productos de Limpieza',
-            'Viajes y Equipaje',
+            'Electrónica', //1
+            'Moda y Vestimenta', //2
+            'Hogar y Cocina',//3
+            'Salud y Belleza',//4
+            'Deportes y Aire Libre',//5
+            'Juguetes y Juegos',//6
+            'Automotriz',//7
+            'Libros',//8
+            'Música',//9
+            'Herramientas y Mejoras del Hogar',//10
+            'Jardín y Exteriores',//11
+            'Mascotas',//12
+            'Alimentos y Bebidas',//13
+            'Oficina y Papelería',//14
+            'Arte y Manualidades',//15
+            'Instrumentos Musicales',//16
+            'Tecnologia',//17
+            'Relojes y Joyería',//18
+            'Calzado',//19
+            'Accesorios',//20
+            'Fotografía y Video',//21
+            'Productos de Limpieza',//22
+            'Viajes y Equipaje',//23
         ];
     
         foreach ($categories as $category) {

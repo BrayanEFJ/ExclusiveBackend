@@ -11,9 +11,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getEigthRandomProducts()
     {
-        //
+        $products = Product::inRandomOrder()->limit(8)->get();
+        return response()->json($products);
     }
 
     /**
