@@ -2,19 +2,45 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductPreviewResource;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\Wishlist;
+use DB;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function getEigthRandomProducts()
+
+    //hay que traer Nombre, precio, si es wishlist, rating, numero de reviews
+    public function getEigthRandomProducts($id = null)
     {
-        $products = Product::inRandomOrder()->limit(8)->get();
-        return response()->json($products);
+        try {
+            $products = Product::select([
+                'id',
+                'name',
+                'price'
+            ])
+                ->withCount('reviews')
+                ->withAvg('reviews', 'rating')
+                ->addSelect([
+                    'is_wishlisted' => Wishlist::select(DB::raw(1))
+                        ->whereColumn('product_id', 'products.id')
+                        ->where('user_id', $id)
+                        ->limit(1)
+                ])
+                ->inRandomOrder()
+                ->limit(8)
+                ->get();
+
+            return response()->json(ProductPreviewResource::collection($products));
+
+        } catch (\Throwable $th) {
+            response()->json(["error" => $th->getMessage()], 400);
+        }
     }
 
     /**

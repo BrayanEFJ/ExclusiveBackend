@@ -13,6 +13,6 @@ Route::get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function () {
     Route::get('Categories', [CategoryController::class, 'getAllCategories'])->name('allCategories');
-    Route::get('Products/RandomEight', [ProductController::class, 'getEigthRandomProducts'])->name('RandomEightProducts');
+    Route::get('Products/RandomEight/{id?}', [ProductController::class, 'getEigthRandomProducts'])->name('RandomEightProducts');
 });
 
