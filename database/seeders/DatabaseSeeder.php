@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             ProductCategorySeeder::class,
             UserSeeder::class,
             WishlistSeeder::class,
-            ReviewSeeder::class
+            ReviewSeeder::class,
+            ProductimageSeeder::class
         ]);
     }
 }

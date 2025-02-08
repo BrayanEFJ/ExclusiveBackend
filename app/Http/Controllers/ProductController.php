@@ -14,8 +14,6 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    //hay que traer Nombre, precio, si es wishlist, rating, numero de reviews
     public function getEigthRandomProducts($id = null)
     {
         try {
@@ -26,6 +24,7 @@ class ProductController extends Controller
             ])
                 ->withCount('reviews')
                 ->withAvg('reviews', 'rating')
+                ->with('images')
                 ->addSelect([
                     'is_wishlisted' => Wishlist::select(DB::raw(1))
                         ->whereColumn('product_id', 'products.id')
@@ -43,21 +42,49 @@ class ProductController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function getFourNewProducts()
     {
-        //
+        try {
+            $products = Product::select(['id', 'name'])
+                ->with([
+                    'categories:id,name',
+                    'images:id,product_id,image_url'
+                ])
+                ->latest()
+                ->limit(4)
+                ->get();
+
+            return response()->json($products);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => $th->getMessage()], 400);
+        }
     }
 
+
+
+    // traer  num stock, descripcion,
+    //   caracteristica y valor de caracteristica, traer categoria
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProductRequest $request)
+    public function GetUniqueProduct($id)
     {
-        //
+        try {
+            $infoUniqueProduct = Product::select(['id', 'name', 'description', 'stock'])
+                ->with([
+                    'categories:id,name',
+                    'features:id,name',
+                ])
+                ->where('id', $id)
+                ->get();
+    
+            return response()->json($infoUniqueProduct);
+        } catch (\Throwable $th) {
+            return response()->json(["error" => $th->getMessage()], 400);
+        }
     }
+    
 
     /**
      * Display the specified resource.

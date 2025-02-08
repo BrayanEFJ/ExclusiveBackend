@@ -14,7 +14,7 @@ class Product extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class, 'product_category');
+        return $this->belongsToMany(Category::class, 'product_categories');
     }
 
     public function images()
@@ -44,7 +44,7 @@ class Product extends Model
 
     public function features()
     {
-        return $this->belongsToMany(Feature::class, 'feature_product')->withPivot('value');
+        return $this->belongsToMany(Feature::class, 'feature_products')->withPivot('value');
     }
 
 

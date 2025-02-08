@@ -17,6 +17,7 @@ class ProductSeeder extends Seeder
             'name' => 'Smartphone X1',
             'description' => 'Un smartphone de última generación con pantalla AMOLED.',
             'price' => 599.99,
+            'image_main' => 'https://1589077843.rsc.cdn77.org/temp/1605715657_73eb50f41718a6bcc810b0421e63fa04.jpg',
             'stock' => 50,
         ]);
 
@@ -24,6 +25,7 @@ class ProductSeeder extends Seeder
             'name' => 'Laptop Pro',
             'description' => 'Laptop potente con procesador Intel i7 y 16GB de RAM.',
             'price' => 1299.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 30,
         ]);
 
@@ -31,6 +33,7 @@ class ProductSeeder extends Seeder
             'name' => 'Bolso Lv',
             'description' => 'Bolso de mano de la marca luois vuitton',
             'price' => 399.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 100,
         ]);
 
@@ -38,6 +41,7 @@ class ProductSeeder extends Seeder
             'name' => 'Libro cien años de soledad',
             'description' => 'Libro escrito por Gabriel García Márquez en 1967 y considerado una obra maestra de la literatura hispanoamericana.',
             'price' => 19.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 20,
         ]);
 
@@ -45,6 +49,7 @@ class ProductSeeder extends Seeder
             'name' => 'Toro Mecánico',
             'description' => 'Teclado mecánico RGB con Compartimentos y decoraciones azules.',
             'price' => 239.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 75,
         ]);
 
@@ -52,6 +57,7 @@ class ProductSeeder extends Seeder
             'name' => 'Mouse Gamer',
             'description' => 'Mouse ergonómico con sensor óptico de alta precisión.',
             'price' => 9.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 60,
         ]);
 
@@ -59,6 +65,7 @@ class ProductSeeder extends Seeder
             'name' => 'Silla Hogar',
             'description' => 'Silla ergonómica con soporte lumbar y reclinable.',
             'price' => 99.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 25,
         ]);
 
@@ -66,6 +73,8 @@ class ProductSeeder extends Seeder
             'name' => 'Cadena suave canina',
             'description' => 'Cadena suave para perros de tamaño mediano.',
             'price' => 2.99,
+            'image_main' => 'https://via.placeholder.com/150',
+
             'stock' => 40,
         ]);
 
@@ -73,6 +82,7 @@ class ProductSeeder extends Seeder
             'name' => 'Oreo Golden Vainilla',
             'description' => 'Edición especial de galletas Oreo con relleno de vainilla.',
             'price' => 2.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 70,
         ]);
 
@@ -80,6 +90,7 @@ class ProductSeeder extends Seeder
             'name' => 'Cámara Cannon',
             'description' => 'Cámara IP con visión nocturna y detección de movimiento.',
             'price' => 89.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 90,
         ]);
 
@@ -87,6 +98,7 @@ class ProductSeeder extends Seeder
             'name' => 'Nomo decorativo',
             'description' => 'Nomo decorativo de jardín con diseño de duende.',
             'price' => 1.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 100,
         ]);
 
@@ -94,6 +106,7 @@ class ProductSeeder extends Seeder
             'name' => 'Zapatos deportivos',
             'description' => 'Zapatos deportivos para correr con suela de goma.',
             'price' => 10.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 35,
         ]);
 
@@ -101,6 +114,7 @@ class ProductSeeder extends Seeder
             'name' => 'Maletero de viaje',
             'description' => 'Maletero de viaje con ruedas y cierre seguro.',
             'price' => 35.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 40,
         ]);
 
@@ -108,6 +122,7 @@ class ProductSeeder extends Seeder
             'name' => 'Motor de lavadora',
             'description' => 'Motor de lavadora de 1/2 HP con 6 velocidades.',
             'price' => 79.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 5,
         ]);
 
@@ -115,6 +130,8 @@ class ProductSeeder extends Seeder
             'name' => 'Impresora Multifunción',
             'description' => 'Impresora láser con escáner y WiFi.',
             'price' => 249.99,
+            'image_main' => 'https://via.placeholder.com/150',
+
             'stock' => 30,
         ]);
 
@@ -122,6 +139,7 @@ class ProductSeeder extends Seeder
             'name' => 'Televisor 55" 4K',
             'description' => 'Smart TV de 55 pulgadas con resolución 4K UHD y HDR.',
             'price' => 699.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 40,
         ]);
 
@@ -129,6 +147,7 @@ class ProductSeeder extends Seeder
             'name' => 'Zapatillas Running',
             'description' => 'Zapatillas deportivas para running con amortiguación avanzada.',
             'price' => 129.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 60,
         ]);
 
@@ -136,6 +155,7 @@ class ProductSeeder extends Seeder
             'name' => 'Set de Ollas de Acero',
             'description' => 'Juego de 5 ollas de acero inoxidable con tapas de vidrio.',
             'price' => 149.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 35,
         ]);
 
@@ -143,6 +163,7 @@ class ProductSeeder extends Seeder
             'name' => 'Perfume Elegance',
             'description' => 'Perfume de 100ml con aroma floral y notas de vainilla.',
             'price' => 89.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 80,
         ]);
 
@@ -150,6 +171,7 @@ class ProductSeeder extends Seeder
             'name' => 'Bicicleta de Montaña',
             'description' => 'Bicicleta con suspensión delantera y marco de aluminio.',
             'price' => 499.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 20,
         ]);
 
@@ -157,6 +179,7 @@ class ProductSeeder extends Seeder
             'name' => 'Juego de Mesa Monopoly',
             'description' => 'Versión clásica del popular juego de mesa Monopoly.',
             'price' => 29.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 50,
         ]);
 
@@ -164,6 +187,7 @@ class ProductSeeder extends Seeder
             'name' => 'Aceite para Motor',
             'description' => 'Aceite sintético para motores de alto rendimiento.',
             'price' => 39.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 100,
         ]);
 
@@ -171,6 +195,7 @@ class ProductSeeder extends Seeder
             'name' => 'Novela Best Seller',
             'description' => 'Novela de ficción ganadora de premios literarios.',
             'price' => 24.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 90,
         ]);
 
@@ -178,6 +203,7 @@ class ProductSeeder extends Seeder
             'name' => 'Guitarra Acústica',
             'description' => 'Guitarra acústica de madera con cuerdas de nylon.',
             'price' => 199.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 15,
         ]);
 
@@ -185,6 +211,7 @@ class ProductSeeder extends Seeder
             'name' => 'Taladro Inalámbrico',
             'description' => 'Taladro con batería recargable y set de brocas.',
             'price' => 89.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 70,
         ]);
 
@@ -192,6 +219,7 @@ class ProductSeeder extends Seeder
             'name' => 'Set de Jardinería',
             'description' => 'Kit con herramientas esenciales para el jardín.',
             'price' => 49.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 40,
         ]);
 
@@ -199,6 +227,7 @@ class ProductSeeder extends Seeder
             'name' => 'Comida para Perros 10kg',
             'description' => 'Alimento balanceado para perros adultos.',
             'price' => 39.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 120,
         ]);
 
@@ -206,6 +235,7 @@ class ProductSeeder extends Seeder
             'name' => 'Café Molido Premium',
             'description' => 'Café 100% arábica en paquete de 500g.',
             'price' => 14.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 200,
         ]);
 
@@ -213,6 +243,7 @@ class ProductSeeder extends Seeder
             'name' => 'Silla de Oficina Ergonómica',
             'description' => 'Silla ajustable con soporte lumbar.',
             'price' => 199.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 25,
         ]);
 
@@ -220,6 +251,7 @@ class ProductSeeder extends Seeder
             'name' => 'Set de Pintura Acrílica',
             'description' => 'Juego de 24 colores con pinceles incluidos.',
             'price' => 34.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 60,
         ]);
 
@@ -228,14 +260,19 @@ class ProductSeeder extends Seeder
             'name' => 'Smartphone X',
             'description' => 'Teléfono inteligente de última generación.',
             'price' => 999.99,
+            'image_main' => 'https://via.placeholder.com/150',
             'stock' => 50
         ]);
 
 
         Product::create([
-            'name' => 'Chaqueta de cuero', 'description' => 'Chaqueta elegante de cuero genuino.', 'price' => 120.00, 'stock' => 30]);
+            'name' => 'Chaqueta de cuero', 'description' => 'Chaqueta elegante de cuero genuino.', 'price' => 120.00,        
+            'image_main' => 'https://via.placeholder.com/150',
+            'stock' => 30]);
         Product::create([
-            'name' => 'Set de ollas de acero', 'description' => 'Juego de ollas de acero inoxidable.', 'price' => 85.00, 'stock' => 40]);
+            'name' => 'Set de ollas de acero', 'description' => 'Juego de ollas de acero inoxidable.', 'price' => 85.00,
+            'image_main' => 'https://via.placeholder.com/150',
+            'stock' => 40]);
         Product::create([
             'name' => 'Crema hidratante facial', 'description' => 'Hidratante con ingredientes naturales.', 'price' => 25.99, 'stock' => 100]);
         Product::create([
