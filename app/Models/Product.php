@@ -47,7 +47,12 @@ class Product extends Model
         return $this->belongsToMany(Feature::class, 'feature_products')->withPivot('value');
     }
 
+    public function mainImage()
+    {
+        return $this->hasOne(Product_image::class)->where('is_main', true);
+    }
 
 
- 
+
+
 }

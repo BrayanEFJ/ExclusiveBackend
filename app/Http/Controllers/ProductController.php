@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ProductPreviewResource;
+use App\Http\Resources\Products\ProductNewsResource;
+use App\Http\Resources\Products\ProductPreviewResource;
 use App\Models\Product;
-use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Wishlist;
 use DB;
@@ -24,7 +24,7 @@ class ProductController extends Controller
             ])
                 ->withCount('reviews')
                 ->withAvg('reviews', 'rating')
-                ->with('images')
+                ->with('mainImage:product_id,image_url')
                 ->addSelect([
                     'is_wishlisted' => Wishlist::select(DB::raw(1))
                         ->whereColumn('product_id', 'products.id')
@@ -49,13 +49,13 @@ class ProductController extends Controller
             $products = Product::select(['id', 'name'])
                 ->with([
                     'categories:id,name',
-                    'images:id,product_id,image_url'
+                    'mainImage:product_id,image_url' // Relación solo con la imagen principal
                 ])
                 ->latest()
                 ->limit(4)
                 ->get();
 
-            return response()->json($products);
+            return response()->json( ProductNewsResource::collection($products));
         } catch (\Throwable $th) {
             return response()->json(["error" => $th->getMessage()], 400);
         }
@@ -78,13 +78,13 @@ class ProductController extends Controller
                 ])
                 ->where('id', $id)
                 ->get();
-    
+
             return response()->json($infoUniqueProduct);
         } catch (\Throwable $th) {
             return response()->json(["error" => $th->getMessage()], 400);
         }
     }
-    
+
 
     /**
      * Display the specified resource.
