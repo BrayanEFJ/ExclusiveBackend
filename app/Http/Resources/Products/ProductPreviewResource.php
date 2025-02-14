@@ -21,7 +21,7 @@ class ProductPreviewResource extends JsonResource
             'reviews_count' => $this->reviews_count,
             'reviews_rating' => $this->reviews_avg_rating,
             'is_wishlisted' => (bool) $this->is_wishlisted,
-            'front_page' => optional($this->mainImage)->image_url,
+            'front_image' => optional($this->mainImage)->image_url,
         ];  
 
     }

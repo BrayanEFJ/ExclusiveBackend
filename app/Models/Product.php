@@ -10,17 +10,21 @@ class Product extends Model
     /** @use HasFactory<\Database\Factories\ProductFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'stock'];
+    protected $fillable = ['name', 'description', 'price', 'stock', 'category_id'];
 
-    public function categories()
+    public function category()
     {
-        return $this->belongsToMany(Category::class, 'product_categories');
+        return $this->belongsTo(Category::class);
     }
+
 
     public function images()
     {
-        return $this->hasMany(Product_image::class);
+        return $this->hasMany(Product_image::class)
+            ->orderByDesc('is_main') // Las imágenes con is_main = true estarán primero
+            ->orderBy('id');
     }
+
 
     public function reviews()
     {
