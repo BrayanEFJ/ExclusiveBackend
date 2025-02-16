@@ -17,13 +17,8 @@ class ProductNewsResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'front_page' => optional($this->mainImage)->image_url,
-            'categories' => $this->categories->map(function ($category) {
-                return [
-                    'id' => $category->id,
-                    'name' => $category->name,
-                ];
-            }),
+            'front_page' => optional(value: $this->mainImage)->image_url,
+            'category' => $this->category->name
         ];
 
     }
