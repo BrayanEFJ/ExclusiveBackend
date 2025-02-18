@@ -23,17 +23,21 @@ class ProductUniqueResource extends JsonResource
             'reviews_count' => $this->reviews_count,
             'reviews_rating' => $this->reviews_avg_rating,
             'is_wishlisted' => (bool) $this->is_wishlisted,
-            'categories' => $this->categories->map(function ($category) {
-                return [
-                    'category_id' => $category->id,
-                    'category_name' => $category->name
-                ];
-            }),
+            'category' => $this->category->name,
+            'products'=>ProductPreviewResource::collection($this->category->products),
             'features' => $this->features->map(function ($feauture) {
                 return [
                     'id' => $feauture->id,
                     'name' => $feauture->name,
                     'value' => $feauture->pivot->value
+                ];
+            }),
+            'reviews'=> $this->reviews->map(function ($review){
+                return [
+                    'username' => $review->user->name,
+                    'rating' => $review->rating,
+                    'comment'=>$review->comment,
+                    'images'=>$review->images
                 ];
             }),
             'images' => $this->images->map(function ($image) {

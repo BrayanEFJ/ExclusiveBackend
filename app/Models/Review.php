@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use function Laravel\Prompts\select;
 
 class Review extends Model
 {
@@ -26,4 +27,9 @@ class Review extends Model
     {
         return $this->hasMany(Review_image::class);
     }
+
+
+
+   
+    
 }

@@ -7,10 +7,7 @@ use App\Http\Resources\Products\ProductNewsResource;
 use App\Http\Resources\Products\ProductPreviewResource;
 use App\Http\Resources\Products\ProductUniqueResource;
 use App\Infraestructure\Exceptions\CustomException;
-use App\Models\Product;
-use App\Http\Requests\UpdateProductRequest;
-use App\Models\Wishlist;
-use DB;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -30,52 +27,34 @@ class ProductController extends Controller
         } catch (CustomException $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Internal Server Error'], 500);
+            return response()->json(data: ['error' => 'Internal Server Error']);
         }
     }
 
     public function getEigthRandomProducts($userId = null)
     {
         try {
-            $randomEightProducts = $this->productService->getEightRandomProducts($userId);
-            return response()->json($randomEightProducts);
+            $randomEightProducts = $this->productService->getRandomProducts($userId);
+            return response()->json(ProductPreviewResource::collection($randomEightProducts));
         } catch (CustomException $e) {
             return response()->json(['error' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
+            return response()->json(data: ['error' => 'Internal Server Error']);
 
         }
     }
 
 
-    // public function getUniqueProduct($id)
-    // {
-    //     try {
-    //         $infoUniqueProduct = $this->getBaseProductQuery($id)
-    //             ->addSelect([
-    //                 'description',
-    //                 'stock',
-    //                 'category_id'
-    //             ])
-    //             ->with([
-    //                 'category:id,name',
-    //                 'features:id,name',
-    //                 'reviews',
-    //                 'reviews.images',
-    //                 'images:product_id,image_url,alt_text',
-    //                 'category.products' => function ($query) use ($id) {
-    //                     $this->getBaseProductQuery($id)
-    //                         ->where('id', '!=', $id)
-    //                         ->inRandomOrder()
-    //                         ->limit(8);
-    //                 }
-    //             ])
-    //             ->where('id', $id)
-    //             ->get();
+    public function getUniqueProduct($productId, Request $request)
+    {
+        $user = $request->input('userId') ?? null;
+        try {
 
-    //         return response()->json($infoUniqueProduct);
-
-    //     } catch (\Throwable $th) {
-    //         return response()->json(["error" => $th->getMessage()], 400);
-    //     }
-    // }
+            $responseUniqueProduct = $this->productService->getProductDetail($productId, $user);
+            return response()->json(ProductUniqueResource::collection($responseUniqueProduct));
+        } catch (CustomException $e) {
+            return response()->json(['error' => $e->getMessage(), 'code' =>$e->getCode()], $e->getCode());
+        } catch (\Exception $e) {
+        }
+    }
 }

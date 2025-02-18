@@ -4,35 +4,36 @@
 namespace App\Domain\Services;
 
 use App\Domain\Contracts\Repositories\ProductRepositoryInterface;
+use App\Infraestructure\Exceptions\CustomException;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductService
 {
 
-    private $productRepository;
+    public function __construct(
+        private readonly ProductRepositoryInterface $productRepository
+    ) {}
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function getLatestProducts(int $limit): Collection
     {
-        $this->productRepository = $productRepository;
+        return $this->productRepository->getLatestProducts($limit);
     }
 
-    public function getLatestProducts(int $limit)
+    public function getRandomProducts(?int $userId = null, int $limit = 8): Collection
     {
-        return $this->productRepository->getLatestWithRelations($limit);
+        return $this->productRepository->getRandomProducts($userId, $limit);
     }
 
-    public function getBaseProducts(int $userId = null)
+    public function getProductDetail(int $productId, ?int $userId = null): Collection
     {
-        return $this->productRepository->getBaseProduct($userId);
-    }
 
+        $productInfo = $this->productRepository->getProductDetail($productId, $userId);
 
-    public function getEightRandomProducts(int $userId = null)
-    {
-        return $this->getBaseProducts($userId)
-            ->inRandomOrder()
-            ->limit(8)
-            ->get();
-        ;
+        if ($productInfo->isEmpty()) {
+            throw new CustomException('Producto no encontrado', 404);
+        }
+
+        return $productInfo;
     }
 
 
