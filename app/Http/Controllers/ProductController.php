@@ -7,7 +7,6 @@ use App\Http\Resources\Products\ProductNewsResource;
 use App\Http\Resources\Products\ProductPreviewResource;
 use App\Http\Resources\Products\ProductUniqueResource;
 use App\Infraestructure\Exceptions\CustomException;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 

@@ -6,26 +6,31 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
+use App\Domain\Services\CategoryService;
 
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public $categoryService;
+    
+    public function __construct(CategoryService $categoryService){
+        $this->categoryService = $categoryService;
+    }
+
+
     public function getAllCategories()
     {
-
-        $response = Category::select(['id', 'name'])->orderBy('id', 'asc')->get();
+       $response = $this->categoryService->getAllCategories();
         return response()->json(CategoryResource::collection($response));
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function allProductsByCategory(?int $idCategory){
+        $response = $this->categoryService->allProductsByCategory($idCategory);
+        return response()->json($response);
     }
+
+   
 
     /**
      * Store a newly created resource in storage.
