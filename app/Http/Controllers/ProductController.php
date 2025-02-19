@@ -7,7 +7,9 @@ use App\Http\Resources\Products\ProductNewsResource;
 use App\Http\Resources\Products\ProductPreviewResource;
 use App\Http\Resources\Products\ProductUniqueResource;
 use App\Infraestructure\Exceptions\CustomException;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
@@ -48,13 +50,31 @@ class ProductController extends Controller
     public function getUniqueProduct($productId, Request $request)
     {
         $user = $request->input('userId') ?? null;
+
         try {
+            $request->validate([
+                'userId' => 'integer|min:1|max:9223372036854775807',
+            ]);
 
             $responseUniqueProduct = $this->productService->getProductDetail($productId, $user);
             return response()->json(ProductUniqueResource::collection($responseUniqueProduct));
+
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => 'Error de validación',
+                'messages' => $e->errors(),
+            ], 422);
         } catch (CustomException $e) {
-            return response()->json(['error' => $e->getMessage(), 'code' =>$e->getCode()], $e->getCode());
+            return response()->json([
+                'error' => $e->getMessage(),
+                'code' => $e->getCode()
+            ], $e->getCode());
+
         } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Ocurrió un error inesperado',
+                'message' => $e->getMessage(),
+            ], 500);
         }
     }
 }

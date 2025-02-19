@@ -26,13 +26,10 @@ class ProductService
 
     public function getProductDetail(int $productId, ?int $userId = null): Collection
     {
-
         $productInfo = $this->productRepository->getProductDetail($productId, $userId);
-
         if ($productInfo->isEmpty()) {
-            throw new CustomException('Producto no encontrado', 404);
+            throw new CustomException('El producto no ha sido encontrado', 404);
         }
-
         return $productInfo;
     }
 
