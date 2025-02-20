@@ -2,18 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Services\WishlistService;
 use App\Models\Wishlist;
 use App\Http\Requests\StoreWishlistRequest;
 use App\Http\Requests\UpdateWishlistRequest;
+use Illuminate\Http\Request;
 
 class WishlistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+
+    private $wishlistService;
+
+    public function __construct(WishlistService $wishlistService){
+        $this->wishlistService = $wishlistService;
+    }
+
+    
+    public function getWishlistByUser(Request $request){
+
+        $request->validate([
+            'userId' => 'required|integer|min:1|max:9223372036854775807'
+        ]);
+
+        $user = $request->query('userId');
+
+        $response = $this->wishlistService->getWishlistByUser($user);
+        return response()->json($response);
+
     }
 
     /**

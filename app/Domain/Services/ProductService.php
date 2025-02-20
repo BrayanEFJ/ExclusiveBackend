@@ -28,7 +28,7 @@ class ProductService
     {
         $productInfo = $this->productRepository->getProductDetail($productId, $userId);
         if ($productInfo->isEmpty()) {
-            throw new CustomException('El producto no ha sido encontrado', 404);
+            throw new CustomException('El producto no ha sido encontrado', code: 404);
         }
         return $productInfo;
     }

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Categories;
 
+use App\Http\Resources\Products\ProductPreviewResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class CategoryWithProductsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,6 +18,7 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'products' => ProductPreviewResource::collection($this->products)
         ];  
-      }
+    }
 }

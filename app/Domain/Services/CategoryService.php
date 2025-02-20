@@ -16,7 +16,7 @@ class CategoryService
     }
 
 
-    public function allProductsByCategory(?int $idCategory){
-        return $this->categoryRepository->allProductsByCategory($idCategory);
+    public function allProductsByCategory(?int $idCategory, ?int $userId){
+        return $this->categoryRepository->allProductsByCategory($idCategory, $userId);
     }
 }

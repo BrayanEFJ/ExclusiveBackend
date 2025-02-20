@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Categories\CategoryWithProductsResource;
+use App\Http\Resources\Categories\CategoryResource;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Domain\Services\CategoryService;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -25,9 +27,10 @@ class CategoryController extends Controller
 
     }
 
-    public function allProductsByCategory(?int $idCategory){
-        $response = $this->categoryService->allProductsByCategory($idCategory);
-        return response()->json($response);
+    public function allProductsByCategory(?int $idCategory,Request $request){
+        $user = $request->input('userId') ?? null;
+        $response = $this->categoryService->allProductsByCategory($idCategory,$user);
+        return response()->json(CategoryWithProductsResource::collection($response));
     }
 
    

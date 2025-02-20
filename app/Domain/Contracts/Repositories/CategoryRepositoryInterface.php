@@ -8,7 +8,7 @@ interface CategoryRepositoryInterface{
 
     public function allCategories():Collection;
 
-    public function allProductsByCategory(?int $idCategory):Collection;
+    public function allProductsByCategory(?int $idCategory, ?int $userId):Collection;
 
 }
     
