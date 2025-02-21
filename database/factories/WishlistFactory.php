@@ -17,7 +17,8 @@ class WishlistFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'user_id' => 1, // ID de usuario entre 1 y 15
+            'product_id' => $this->faker->numberBetween(1, 40), // ID de producto entre 1 y 60
         ];
     }
 }

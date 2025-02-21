@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,10 @@ class DatabaseSeeder extends Seeder
             ReviewSeeder::class,
             ProductImageSeeder::class,
             FeatureSeeder::class,
-            FeatureProductSeeder::class
+            FeatureProductSeeder::class,
         ]);
+
+        //Wishlist::factory(100000)->create();
+
     }
 }

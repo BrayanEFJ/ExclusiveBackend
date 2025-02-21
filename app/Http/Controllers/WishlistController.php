@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\WishlistService;
+use App\Http\Resources\Products\ProductPreviewResource;
 use App\Models\Wishlist;
 use App\Http\Requests\StoreWishlistRequest;
 use App\Http\Requests\UpdateWishlistRequest;
+use App\Http\Resources\Wishlist\WishlistProductPreview;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
@@ -13,12 +16,14 @@ class WishlistController extends Controller
 
     private $wishlistService;
 
-    public function __construct(WishlistService $wishlistService){
+    public function __construct(WishlistService $wishlistService)
+    {
         $this->wishlistService = $wishlistService;
     }
 
-    
-    public function getWishlistByUser(Request $request){
+
+    public function getWishlistByUser(Request $request)
+    {
 
         $request->validate([
             'userId' => 'required|integer|min:1|max:9223372036854775807'
@@ -26,10 +31,23 @@ class WishlistController extends Controller
 
         $user = $request->query('userId');
 
-        $response = $this->wishlistService->getWishlistByUser($user);
-        return response()->json($response);
 
+        $products = Wishlist::where('user_id', $user)
+            ->with([
+                'product' => function ($query) {
+                    $query->select('id', 'name', 'price')
+                        ->withCount('reviews') // Cuenta el número de reviews
+                        ->withAvg('reviews', 'rating') // Calcula el promedio de rating
+                        ->with('mainImage:product_id,image_url'); // Trae solo la imagen principal
+                }
+            ])
+            ->get()
+            ->pluck('product');
+
+        return WishlistProductPreview::collection($products);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

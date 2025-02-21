@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Resources\Products;
+namespace App\Http\Resources\Wishlist;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductPreviewResource extends JsonResource
+class WishlistProductPreview extends JsonResource
 {
+    
     public function toArray(Request $request): array
     {
         return [
@@ -15,9 +16,8 @@ class ProductPreviewResource extends JsonResource
             'price' => $this->price,
             'reviews_count' => $this->reviews_count,
             'reviews_rating' => $this->reviews_avg_rating,
-            'is_wishlisted' => (bool) $this->is_wishlisted,
+            'is_wishlisted' => true,
             'front_image' => optional($this->mainImage)->image_url,
-        ];  
-
+        ]; 
     }
 }
