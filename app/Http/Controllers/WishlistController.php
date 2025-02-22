@@ -31,20 +31,9 @@ class WishlistController extends Controller
 
         $user = $request->query('userId');
 
+        $products = $this->wishlistService->getWishlistByUser($user);
 
-        $products = Wishlist::where('user_id', $user)
-            ->with([
-                'product' => function ($query) {
-                    $query->select('id', 'name', 'price')
-                        ->withCount('reviews') // Cuenta el número de reviews
-                        ->withAvg('reviews', 'rating') // Calcula el promedio de rating
-                        ->with('mainImage:product_id,image_url'); // Trae solo la imagen principal
-                }
-            ])
-            ->get()
-            ->pluck('product');
-
-        return WishlistProductPreview::collection($products);
+        return response()->json(WishlistProductPreview::collection($products));
     }
 
 

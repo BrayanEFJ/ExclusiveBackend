@@ -5,9 +5,9 @@ namespace App\Infraestructure\Repositories;
 use App\Domain\Contracts\Repositories\ProductRepositoryInterface;
 use App\Models\Product;
 use App\Models\Wishlist;
-use DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB as DB;
 use Request;
 
 class ProductRepository implements ProductRepositoryInterface
@@ -48,6 +48,11 @@ class ProductRepository implements ProductRepositoryInterface
             ]);
         }
         return $query;
+    }
+
+    public function existProduct(int $productId): bool
+    {
+        return Product::where('id', $productId)->exists();
     }
 
     public function getProductDetail(int $productId, ?int $userId = null): Collection

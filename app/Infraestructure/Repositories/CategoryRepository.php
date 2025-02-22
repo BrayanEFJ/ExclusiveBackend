@@ -6,8 +6,9 @@ use App\Domain\Contracts\Repositories\CategoryRepositoryInterface;
 
 use App\Models\Category;
 use App\Models\Wishlist;
-use DB;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\FuncCall;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
@@ -38,5 +39,12 @@ class CategoryRepository implements CategoryRepositoryInterface
 
         return $response->get();
     }
+
+
+    public function existCategory(int $idCategory): bool
+    {
+        $response = Category::where('id', $idCategory)->exists();
+        return $response;
+    }   
 
 }
