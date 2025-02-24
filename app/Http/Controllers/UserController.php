@@ -2,65 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Http\Requests\StoreUserRequest;
-use App\Http\Requests\UpdateUserRequest;
+use App\Domain\Services\UserService;
+use App\Http\Requests\Users\LoginUserRequest;
+use App\Http\Resources\Users\UsersInfoEssential;
+use App\Infraestructure\Exceptions\CustomException;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+
+    public function __construct(
+        private readonly UserService $userService
+    ) {
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function getInfoUserById(Request $request)
     {
-        //
+        $userId = $request->input('userId');
+        $user = $this->userService->getInfoUserById($userId);
+        return response()->json(UsersInfoEssential::collection($user));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreUserRequest $request)
+
+    public function login(LoginUserRequest $request)
     {
-        //
+        $email = $request->input('email');
+        $password = $request->input('password');
+        //pendiente por desarrollar
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserRequest $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
-    }
 }

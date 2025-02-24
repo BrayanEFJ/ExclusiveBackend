@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Domain\Contracts\Repositories\CartRepositoryInterface;
 use App\Domain\Contracts\Repositories\CategoryRepositoryInterface;
 use App\Domain\Contracts\Repositories\ProductRepositoryInterface;
 use App\Domain\Contracts\Repositories\UserRepositoryInterface;
 use App\Domain\Contracts\Repositories\WishlistRepositoryInterface;
+use App\Infraestructure\Repositories\CartRepository;
 use App\Infraestructure\Repositories\CategoryRepository;
 use App\Infraestructure\Repositories\ProductRepository;
 use App\Infraestructure\Repositories\UserRepository;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class); 
         $this->app->bind(WishlistRepositoryInterface::class, WishlistRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
 
     }
 

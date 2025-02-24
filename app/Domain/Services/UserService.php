@@ -3,6 +3,7 @@
 namespace App\Domain\Services;
 
 use App\Domain\Contracts\Repositories\UserRepositoryInterface;
+use App\Infraestructure\Exceptions\CustomException;
 use PhpParser\Node\Expr\Cast\Bool_;
 
 class UserService{
@@ -19,6 +20,21 @@ class UserService{
         }
         return false;
     }
+
+    public function getInfoUserById(int $userId){
+
+        $userResponse = $this->userRepository->findUniqueUserById($userId);
+        if($userResponse->count() > 0 && $userResponse->isEmpty() == false){
+            return $userResponse;
+        }
+        return throw new CustomException('Tu usuario no existe', 404);
+    }
+
+    public function login(){
+        //pendiente por desarrollar
+    }
+
+
 
 
 

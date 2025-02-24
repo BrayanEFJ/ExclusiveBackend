@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,15 @@ Route::prefix('v1')->group(function () {
     Route::prefix('Wishlist')->group(function(){
         Route::get('/getProducts', [WishlistController::class, 'getWishlistByUser'])->name('GetWishlistByUser');
     });
+
+    Route::prefix('Users')->group(function(){
+        Route::get('/getInfoUser', [UserController::class, 'getInfoUserById'])->name('getInfoUserById');
+    });
+
+    Route::prefix('Cart')->group(function(){
+        Route::get('/getInfoCart/{userId}', [CartController::class, 'getInfoCartByUserId'])->name('getInfoCartByUserId');
+    });
+
 
 });
 

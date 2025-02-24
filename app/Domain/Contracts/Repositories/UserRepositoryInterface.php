@@ -8,4 +8,9 @@ interface UserRepositoryInterface
 {
     public function findUniqueUserById(int $userId) : Collection;
 
+    public function infoLogin () : Collection;    //pendiente por desarrollar
+
+
+
+
 }

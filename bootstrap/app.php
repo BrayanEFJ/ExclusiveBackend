@@ -33,7 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function(TypeError $e){
             return response()->json([
-                'message' => 'Los tipos de datos para la solicitud son incorrectos',
+                'message' => 'Peticion mal formada o incorrecta',
                 'status' => 400
             ], 400);
         });

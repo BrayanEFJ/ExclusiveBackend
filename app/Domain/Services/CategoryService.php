@@ -6,9 +6,7 @@ use App\Infraestructure\Exceptions\CustomException;
 
 class CategoryService
 {
-
     public $userService;
-
 
     public function __construct(
         private  readonly  CategoryRepositoryInterface $categoryRepository,

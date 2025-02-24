@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ProductImageSeeder::class,
             FeatureSeeder::class,
             FeatureProductSeeder::class,
+            CartSeeder::class,  
         ]);
 
         //Wishlist::factory(100000)->create();

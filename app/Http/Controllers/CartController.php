@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain\Services\CartService;
 use App\Models\Cart;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
 
 class CartController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   
+    public $cartService;
+
+    public function __construct(CartService $cartService)
     {
-        //
+        $this->cartService = $cartService;
     }
+
+
+
+    public function getInfoCartByUserId(int $userId)
+    {
+        $response = $this->cartService->getCartByUserId($userId);
+        return response()->json($response);
+    }
+    
 
     /**
      * Show the form for creating a new resource.

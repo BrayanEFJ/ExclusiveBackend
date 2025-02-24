@@ -10,7 +10,7 @@ class User extends Model
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password_hash'];
+    protected $fillable = ['name', 'email', 'address','password_hash'];
 
     public function reviews()
     {
