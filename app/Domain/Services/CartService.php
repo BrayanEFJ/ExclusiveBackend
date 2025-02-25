@@ -26,7 +26,7 @@ class CartService{
         if($cartResponse->count() > 0 && $cartResponse->isEmpty() == false){
             return $cartResponse;
         }
-        return throw new CustomException('No tienes ningun articulo en tu carrito', 204);
+        return throw new CustomException('No tienes ningun articulo en tu carrito', 404);
     }
 
 }

@@ -14,6 +14,13 @@ class CartPreviewResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return ([
+            'product_id' => $this->product_id,
+            'name' => $this->product->name,
+            'front_image' => optional($this->product->mainImage)->image_url,
+            'quantity' => $this->quantity,
+            'price' => $this->product->price,
+            'subtotal' => $this->quantity * $this->product->price,
+        ]);
     }
 }

@@ -10,7 +10,7 @@ interface UserRepositoryInterface
 
     public function infoLogin () : Collection;    //pendiente por desarrollar
 
-
+    public function createUser(array $data);
 
 
 }

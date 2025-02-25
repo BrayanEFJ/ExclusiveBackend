@@ -23,6 +23,11 @@ class UserRepository implements UserRepositoryInterface
         return $user;
     }
 
+    public function createUser(array $data)
+    {
+        return User::create($data);
+    }
+
 
 
 }

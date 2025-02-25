@@ -3,7 +3,11 @@
 namespace App\Domain\Services;
 
 use App\Domain\Contracts\Repositories\UserRepositoryInterface;
+use App\Http\Requests\Users\StoreUserRequest;
 use App\Infraestructure\Exceptions\CustomException;
+use App\Models\User;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Expr\Cast\Bool_;
 
 class UserService{
@@ -34,6 +38,14 @@ class UserService{
         //pendiente por desarrollar
     }
 
+
+    public function createUser(StoreUserRequest $request)
+    {
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password_hash']); // Encriptar contraseña
+
+        return $this->userRepository->createUser($data);
+    }
 
 
 

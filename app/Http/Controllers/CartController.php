@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\CartService;
+use App\Http\Resources\Cart\CartPreviewResource;
 use App\Models\Cart;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
@@ -22,7 +23,7 @@ class CartController extends Controller
     public function getInfoCartByUserId(int $userId)
     {
         $response = $this->cartService->getCartByUserId($userId);
-        return response()->json($response);
+        return response()->json(CartPreviewResource::collection($response));
     }
     
 
