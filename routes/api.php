@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
@@ -39,6 +40,10 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('Cart')->group(function(){
         Route::get('/getInfoCart/{userId}', [CartController::class, 'getInfoCartByUserId'])->name('getInfoCartByUserId');
+    });
+
+    Route::prefix('Order')->group(function(){
+        Route::post('/', [OrderController::class, 'createOrder'])->name('createOrder');
     });
 
 
