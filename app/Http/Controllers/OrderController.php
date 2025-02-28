@@ -10,6 +10,7 @@ use App\Models\Order_detail;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
@@ -19,9 +20,45 @@ class OrderController extends Controller
     public function createOrder(Request $request)
     {
 
-        $data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+            'products' => 'required|array|min:1',
+            'products.*.product_id' => 'required|integer|exists:products,id',
+            'products.*.quantity' => 'required|integer|min:1',
+        ]);
 
-        return DB::transaction(function () use ($data) {
+       
+
+        $data = $request->all();
+        $productItems = collect($data['products']);
+        $productIds = $productItems->pluck('product_id')->toArray();
+
+        // Verificar stock antes de la transacción
+        $products = Product::select('id', 'price', 'stock', 'name')
+            ->whereIn('id', $productIds)
+            ->get()
+            ->keyBy('id');
+
+        // Verificar stock disponible antes de iniciar la transacción
+        $insufficientStockProducts = [];
+        foreach ($productItems as $item) {
+            $productId = $item['product_id'];
+            
+            if (!isset($products[$productId])) {
+                throw new CustomException("El producto con id {$productId} no existe", 400);
+            }
+            
+            if ($products[$productId]->stock < $item['quantity']) {
+                $insufficientStockProducts[] = $products[$productId]->name ?? "ID: {$productId}";
+            }
+        }
+
+        if (!empty($insufficientStockProducts)) {
+            throw new CustomException("Stock insuficiente para los productos: " . implode(', ', $insufficientStockProducts));
+        }
+
+        // Iniciar transacción después de validaciones
+        return DB::transaction(function () use ($data, $productItems, $products) {
             // Crear la orden con total inicial de 0
             $order = Order::create([
                 'user_id' => $data['user_id'],
@@ -29,93 +66,57 @@ class OrderController extends Controller
                 'total_price' => 0,
             ]);
 
-            // Obtener IDs de productos
-            $productItems = collect($data['products']);
-            $productIds = $productItems->pluck('product_id')->unique()->values();
-
-            // Cargar productos con sus descuentos activos en una sola consulta
-            $products = Product::select('id', 'price', 'stock', 'name')
-                ->with([
-                    'discount' => function ($query) {
-                        $query->select('id', 'product_id', 'discount_percentage', 'start_date', 'end_date')
-                            ->where('start_date', '<=', now())
-                            ->where('end_date', '>=', now());
-                    }
-                ])
-                ->whereIn('id', $productIds)
-                ->get();
-
-            // Transformar la colección en un mapa indexado por ID con cantidades incluidas
-            $products = $products->keyBy('id');
-
-            // Añadir las cantidades solicitadas directamente a los productos, posible mejora de rencimiento por probar
-            // foreach ($productItems as $item) {
-            //     if (isset($products[$item['product_id']])) {
-            //         $products[$item['product_id']]->requested_quantity = $item['quantity'];
-            //     }
-            // }
-
-
-            $insufficientStockProducts = [];
-            foreach ($productItems as $item) {
-                $productId = $item['product_id'];
-                if (0 >= $item['quantity']) {
-                    throw new CustomException("No se admiten pedidos con cantidades iguales o menores a 0", 400);
-                }
-                if (!isset($products[$productId])) {
-                    throw new CustomException("El producto con id " . $productId . " no existe", 400);
-                }
-                if ($products[$productId]->stock < $item['quantity']) {
-                    $insufficientStockProducts[] = $products[$productId]->name ?? "ID: {$productId}";
-                }
-            }
-
-            if (!empty($insufficientStockProducts)) {
-                throw new CustomException("Stock insuficiente para los productos: " . implode(', ', $insufficientStockProducts));
-            }
-
+            // Preparar arrays para inserciones y actualizaciones en lote
             $orderDetails = [];
             $totalPrice = 0;
             $stockUpdates = [];
 
+            // Procesar todos los productos en un solo loop
             foreach ($productItems as $item) {
-                $product = $products->firstWhere('id', $item['product_id']);
+                $productId = $item['product_id'];
+                $product = $products[$productId];
+                $quantity = $item['quantity'];
+                
+                // Calcular precio (añadir lógica de descuento si es necesaria)
                 $pricePerProduct = $product->price;
-
-                // Acumular detalles de la orden
+                
+                // Acumular detalles para inserción masiva
                 $orderDetails[] = [
                     'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'quantity' => $item['quantity'],
+                    'product_id' => $productId,
+                    'quantity' => $quantity,
                     'price_per_product' => $pricePerProduct,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ];
-
-                // Preparar actualización de stock
-                $stockUpdates[$product->id] = [
-                    'stock' => $product->stock - $item['quantity']
+                
+                // Actualizar el stock en memoria
+                $newStock = $product->stock - $quantity;
+                $stockUpdates[] = [
+                    'id' => $productId,
+                    'stock' => $newStock
                 ];
-
-                // Calcular precio total
-                $totalPrice += $pricePerProduct * $item['quantity'];
+                
+                // Acumular el precio total
+                $totalPrice += $pricePerProduct * $quantity;
             }
-
-            // Insertar detalles en una sola operación
+            
+            // Insertar todos los detalles en una sola operación
             Order_detail::insert($orderDetails);
-
-            // Actualizar stock usando actualizaciones masivas
-            foreach ($stockUpdates as $productId => $update) {
-                Product::where('id', $productId)->update($update);
+            
+            // Actualizar el stock usando updateOrInsert en lote
+            foreach ($stockUpdates as $update) {
+                Product::where('id', $update['id'])->update(['stock' => $update['stock']]);
             }
-
+            
             // Actualizar el total de la orden
             $order->total_price = $totalPrice;
             $order->save();
-
-            // Cargar relaciones necesarias y devolver
-            return $order->load('details.product');
-
+            
+            return response()->json([
+                'message' => 'Orden creada exitosamente',
+                'order_id' => $order->id,
+            ],201);
 
         });
     }
@@ -126,15 +127,7 @@ class OrderController extends Controller
      * @param Product $product
      * @return float
      */
-    private function calculateProductPrice(Product $product)
-    {
-        if ($product->discount->isNotEmpty() && $product->discount != null) {
-            $discount = $product->discount->first();
-            return $product->price - ($product->price * $discount->percentage / 100);
-        }
 
-        return $product->price;
-    }
 
     /**
      * Show the form for creating a new resource.

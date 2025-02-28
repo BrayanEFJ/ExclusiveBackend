@@ -14,9 +14,7 @@ class UserController extends Controller
 
     public function __construct(
         private readonly UserService $userService
-    ) {
-    }
-
+    ) {}
 
     public function getInfoUserById(Request $request)
     {
@@ -25,7 +23,6 @@ class UserController extends Controller
         return response()->json(UsersInfoEssential::collection($user));
     }
 
-
     public function login(LoginUserRequest $request)
     {
         $email = $request->input('email');
@@ -33,9 +30,8 @@ class UserController extends Controller
         //pendiente por desarrollar
     }
 
-
-    public function createUser(StoreUserRequest $request){
-        $this->userService->createUser($request);
+    public function createUser(StoreUserRequest $request)
+    {
+        return $this->userService->createUser($request);
     }
-
 }

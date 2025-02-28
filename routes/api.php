@@ -35,7 +35,6 @@ Route::prefix('v1')->group(function () {
     Route::prefix('Users')->group(function(){
         Route::get('/getInfoUser', [UserController::class, 'getInfoUserById'])->name('getInfoUserById');
         Route::post('/Create', [UserController::class, 'createUser'])->name('createUser');
-
     });
 
     Route::prefix('Cart')->group(function(){
@@ -45,6 +44,9 @@ Route::prefix('v1')->group(function () {
     Route::prefix('Order')->group(function(){
         Route::post('/', [OrderController::class, 'createOrder'])->name('createOrder');
     });
+
+
+
 
 
 });
