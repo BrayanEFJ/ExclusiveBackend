@@ -34,6 +34,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function(TypeError $e){
             return response()->json([
                 'message' => 'Peticion mal formada o incorrecta',
+                'errors'   => $e->getMessage(),
                 'status' => 400
             ], 400);
         });

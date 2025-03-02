@@ -43,6 +43,7 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('Order')->group(function(){
         Route::post('/', [OrderController::class, 'createOrder'])->name('createOrder');
+        Route::get('/ListOrdersByUser/{userId}', [OrderController::class, 'ListOrdersByUser'])->name('ListOrdersByUser');
     });
 
 

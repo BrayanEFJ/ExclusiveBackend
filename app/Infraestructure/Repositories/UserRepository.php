@@ -12,22 +12,25 @@ class UserRepository implements UserRepositoryInterface
     public function findUniqueUserById(int $userId): Collection
     {
 
-        $user = User::select('id', 'name','email','address','created_at')->where('id', $userId)->limit(1)->get();
+        $user = User::select('id', 'name', 'email', 'address', 'created_at')->where('id', $userId)->limit(1)->get();
         return $user;
     }
-   
 
-    public function infoLogin () : Collection {
+
+    public function infoLogin(): Collection
+    {
         //pendiente por desarrollar
-        $user = User::select('id', 'name','email','password_hash','created_at')->get();
+        $user = User::select('id', 'name', 'email', 'password_hash', 'created_at')->get();
         return $user;
     }
 
     public function createUser(array $data)
     {
-        return User::create($data);
+        try {
+            $user = User::create($data);
+            return $user::select( 'id','name', 'email', 'address','created_at')->where('id', $user->id)->get( );
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
-
-
-
 }

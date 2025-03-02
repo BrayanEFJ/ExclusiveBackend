@@ -101,5 +101,19 @@ class ProductRepository implements ProductRepositoryInterface
             ->get();
     }
 
+    public function getProductsByIds(array $productIds): Collection
+    {
+        return Product::select('id', 'price', 'stock', 'name')
+            ->whereIn('id', $productIds)
+            ->get()
+            ->keyBy('id');
+    }
+
+    public function updateStockBatch(array $stockUpdates): void
+    {
+        foreach ($stockUpdates as $update) {
+            Product::where('id', $update['id'])->update(['stock' => $update['stock']]);
+        }
+    }
 
 }
