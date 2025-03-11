@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order_detail;
 use App\Http\Requests\StoreOrder_detailRequest;
 use App\Http\Requests\UpdateOrder_detailRequest;
+use Illuminate\Support\Facades\DB;
 
 class OrderDetailController extends Controller
 {
@@ -14,6 +15,23 @@ class OrderDetailController extends Controller
     public function index()
     {
         //
+    }
+
+
+    public function listBestSellers()
+    {
+        try {
+            $topProducts = Order_detail::select('products.id', 'products.name', DB::raw('COUNT(products.name) as total'))
+                ->join('products', 'order_details.product_id', '=', 'products.id')
+                ->groupBy('order_details.product_id', 'products.name')
+                ->orderByDesc('total')
+                ->limit(4)
+                ->get();
+
+            return response()->json($topProducts, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     /**
