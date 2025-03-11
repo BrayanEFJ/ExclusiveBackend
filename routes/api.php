@@ -29,6 +29,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('Wishlist')->group(function(){
+        Route::post('/markAsWishlist', [WishlistController::class, 'markAsWishlist'])->name('markAsWishlist');
         Route::get('/getProducts', [WishlistController::class, 'getWishlistByUser'])->name('GetWishlistByUser');
     });
 
@@ -45,6 +46,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/', [OrderController::class, 'createOrder'])->name('createOrder');
         Route::get('/ListOrdersByUser/{userId}', [OrderController::class, 'ListOrdersByUser'])->name('ListOrdersByUser');
     });
+
+
 
 
 

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\WishlistService;
-use App\Http\Resources\Products\ProductPreviewResource;
 use App\Models\Wishlist;
-use App\Http\Requests\StoreWishlistRequest;
 use App\Http\Requests\UpdateWishlistRequest;
+use App\Http\Requests\Wishlist\MarkWishlistRequest;
 use App\Http\Resources\Wishlist\WishlistProductPreview;
-use Illuminate\Http\JsonResponse;
+use App\Infraestructure\Exceptions\CustomException;
+use Exception;
 use Illuminate\Http\Request;
 
 class WishlistController extends Controller
@@ -36,23 +36,18 @@ class WishlistController extends Controller
         return response()->json(WishlistProductPreview::collection($products));
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function markAsWishlist(MarkWishlistRequest $request)
     {
-        //
+        $user_id = $request->input('user_id');
+        $product_id = $request->input('product_id');
+
+        $this->wishlistService->markAsWishlist($user_id, $product_id);
+        return response()->json(['message' => 'Producto añadido a wishlist', 'status' => '201'], 201);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreWishlistRequest $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
