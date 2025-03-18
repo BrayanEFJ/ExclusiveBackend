@@ -27,7 +27,7 @@ Route::prefix('v1')->group(function () {
         Route::get('RandomEight/{id?}', [ProductController::class, 'getEigthRandomProducts'])->name('RandomEightProducts');
         Route::get('FourNewProducts', [ProductController::class, 'getFourNewProducts'])->name('getFourNewProducts');
         Route::get('UniqueProduct/{id}', [ProductController::class, 'GetUniqueProduct'])->name('GetUniqueProduct');
-        Route::get('BestSellers',[OrderDetailController::class, 'listBestSellers'])->name('listBestSellersProducts');
+        Route::get('BestSellers/{id}',[OrderDetailController::class, 'listBestSellers'])->name('listBestSellersProducts');
     });
 
     Route::prefix('Wishlist')->group(function(){

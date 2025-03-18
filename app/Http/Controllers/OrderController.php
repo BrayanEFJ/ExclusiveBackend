@@ -40,7 +40,7 @@ class OrderController extends Controller
         $response = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($userId) {
             return $this->orderService->listAllOrders($userId);
         });
-        return response()->json(OrderPreviewResource::collection($response));
+        return response()->json($response);
     }
 
 
